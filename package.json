@@ -4,7 +4,8 @@
   "description": "Javascript package to check code style",
   "main": "src/main.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "run": "node src/main.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/ArielOnoriaga/javascript-validator/issues"
   },
-  "homepage": "https://github.com/ArielOnoriaga/javascript-validator#readme"
+  "homepage": "https://github.com/ArielOnoriaga/javascript-validator#readme",
+  "devDependencies": {
+    "jest": "^26.6.3"
+  }
 }
