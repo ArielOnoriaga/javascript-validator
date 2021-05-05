@@ -1,0 +1,25 @@
+{
+  "name": "javascript-validator",
+  "version": "0.1.0",
+  "description": "Javascript package to check code style",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArielOnoriaga/javascript-validator.git"
+  },
+  "keywords": [
+    "javascript",
+    "validator",
+    "code",
+    "style"
+  ],
+  "author": "arielonoriaga <onoriagaariel@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ArielOnoriaga/javascript-validator/issues"
+  },
+  "homepage": "https://github.com/ArielOnoriaga/javascript-validator#readme"
+}
