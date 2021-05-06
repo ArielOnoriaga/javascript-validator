@@ -25,5 +25,8 @@
   "homepage": "https://github.com/ArielOnoriaga/javascript-validator#readme",
   "devDependencies": {
     "jest": "^26.6.3"
+  },
+  "dependencies": {
+    "espree": "^7.3.1"
   }
 }
