@@ -1,5 +1,6 @@
 module.exports = {
     arrowFunction: 'ArrowFunctionExpression',
-    regularFunction: 'FunctionDeclaration',
+    regularFunction: ['FunctionDeclaration', 'FunctionExpression'],
     variables: 'VariableDeclaration',
+    objectExpression: 'ObjectExpression'
 };

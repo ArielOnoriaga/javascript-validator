@@ -29,7 +29,7 @@ const getArgs = () => {
             const [argType, value] = flag.split('=');
 
             existsOnArray(flattenValidFlags, argType)
-                ? validUsedArguments[getFlag(argType)] = value
+                ? validUsedArguments[getFlag(argType)] = value ?? true
                 : invalidUsedArguments.push(argType);
         });
 

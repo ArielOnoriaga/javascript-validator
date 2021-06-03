@@ -1,14 +1,24 @@
 const {
     arrowFunction,
     regularFunction,
-    variables
+    variables,
+    objectExpression,
 } = require('../ast/types');
 
 const maxFunctionLength = 30;
 
+const isVariableDeclaration = ast => ast.type === variables;
+const isObject = (ast) => ast.type === objectExpression;
+
+const getClassesWithMethods = (ast) =>
+    ast.declarations
+        .filter(declaration => isObject(declaration.init))
+        .filter(({ init: { properties } }) =>
+            properties.filter(property => isRegularFunction(property.value))
+        );
+
 const isArrowFunction = (ast) => {
-    if(ast.type !== variables)
-        return false;
+    if(!isVariableDeclaration(ast)) return;
 
     const { declarations } = ast;
     const {
@@ -20,9 +30,9 @@ const isArrowFunction = (ast) => {
     return type === arrowFunction;
 };
 
-const isRegularFunction = ({ type }) => type === regularFunction;
+const isRegularFunction = ({ type }) => regularFunction.includes(type);
 
-const isFunction = (ast) =>
+const isFunction = ast =>
     isArrowFunction(ast)
     || isRegularFunction(ast);
 
@@ -30,10 +40,10 @@ const getFunctionName = (ast) => {
     let declaration = ast;
 
     if(isArrowFunction(ast)) {
-        declaration = ast.declarations[0];
+        [declaration] = ast.declarations;
     }
 
-    return declaration.id.name;
+    return declaration.id?.name || declaration.key?.name;
 }
 
 const generateFunctionError = (name, lines) => {
@@ -56,10 +66,27 @@ const functionValidations = (file, declaration) => {
         generateFunctionError(functionName, functionLength);
     }
 
-    return;
+    return true;
 }
+
+const validateClassMethods = (file, declaration) => {
+    isVariableDeclaration(declaration) && getClassesWithMethods(declaration)
+        .forEach(classAst => {
+            classAst
+                .init
+                .properties
+                .filter(method => isRegularFunction(method.value))
+                .forEach(method => functionValidations(file, method))
+        });
+};
 
 module.exports = {
     functionValidations,
+    getClassesWithMethods,
+    isArrowFunction,
     isFunction,
+    isRegularFunction,
+    isVariableDeclaration,
+    validateClassMethods,
+    getFunctionName,
 }
