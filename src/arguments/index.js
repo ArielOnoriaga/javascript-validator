@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 const validArguments = require('./validArguments');
 
 const arguments = process.argv;
@@ -20,7 +22,7 @@ const getFlag = (flag) => {
 }
 
 const getArgs = () => {
-    const validUsedArguments = {};
+    let validUsedArguments = {};
     const invalidUsedArguments = [];
     const flattenValidFlags = validFlags.flat();
 
@@ -32,6 +34,19 @@ const getArgs = () => {
                 ? validUsedArguments[getFlag(argType)] = value ?? true
                 : invalidUsedArguments.push(argType);
         });
+
+    if(validUsedArguments.config) {
+        const fileName = validUsedArguments.config;
+
+        const filePath = `${process.cwd()}/${fileName}`;
+
+        const configFile = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+
+        validUsedArguments = {
+            ...configFile,
+            ...validUsedArguments,
+        }
+    }
 
     if(invalidUsedArguments.length)
         console.warn('The next arguments are invalid', invalidUsedArguments);

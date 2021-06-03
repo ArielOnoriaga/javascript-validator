@@ -29,8 +29,6 @@ const validateFile = (args, file) => {
                 throw new Error(`The function ${functionName} has more arguments than ${maxFunctionArguments}`);
             }
 
-            isRegularFunction(declaration) && console.log(declaration);
-
             isArrowFunction(declaration) && declaration.declarations.forEach(declaration => {
             // console.log(declaration.init.params)
             });
